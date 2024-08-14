@@ -38,3 +38,28 @@ for (let i = 0; i < matriz.length; i++) {
 for (let i = 0; i < matriz[0].length; i++) {
     console.log(matriz[0][i]);    
 }
+
+// Recorrer la totalidad de los datos de la matriz
+
+for (let i = 0; i < matriz.length; i++) {
+    for (let j = 0; j < matriz.length; j++) {
+        console.log(matriz[i][j]);        
+    }
+}
+
+// Filtrar elementos de la matriz (Ejemplo, cuales son pares)
+console.log(" ==================== ");
+function esPar(num){
+    if(num % 2 == 0){
+        return true;
+    }else
+        return false;
+}
+
+for (let i = 0; i < matriz.length; i++) { // Recorro las filas
+    for (let j = 0; j < matriz[i].length; j++) { // Recorro las columnas, pero en el matriz.length solo toma el numero de filas, entonces para columnas debo indicar la posicion de cada fila
+        if(esPar(matriz[i][j])){
+            console.log(matriz[i][j]);
+        }       
+    }
+}
