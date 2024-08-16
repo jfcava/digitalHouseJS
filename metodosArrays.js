@@ -160,6 +160,8 @@ console.log(palabras);
 
 //Sintaxis -> let resultado = arrayOriginal.find(funcionDePrueba(elemento));
 
+console.log("==================================");
+console.log("FIND - Devuelve el primer elemento que cumple con la condicion dada en la funcion");
 let edades = [25, 18, 30, 15, 22];
 
 let mayorDeEdad = edades.find(edad => edad >= 18);
@@ -167,6 +169,65 @@ console.log(mayorDeEdad);
 
 let primeraEdadMayor = edades.find(edad => edad > 30);
 console.log(primeraEdadMayor);
+
+
+
+//MAP - Recorre el arreglo y devuelve un nuevo arreglo con las modificaciones que nosotros le indiquemos en la funcion que le enviamos como callback
+
+
+console.log("==================================");
+console.log("MAP - Recorre el arreglo y devuelve un nuevo arreglo con las modificaciones que nosotros le indiquemos en la funcion que le enviamos como callback");
+let numerosMap = [2,4,6];
+
+let numerosMultiplicados = numerosMap.map(function(num){
+    return num * 2;
+});
+
+console.log(numerosMultiplicados);
+
+
+
+//FILTER - Recorrer un array y devuelve un nuevo array con los elementos filtrados segun la funcion callback enviada
+
+console.log("==================================");
+console.log("FILTER - Recorrer un array y devuelve un nuevo array con los elementos filtrados segun la funcion callback enviada");
+
+let edades2 = [22, 8, 17, 14, 30];
+
+let mayoresDeEdad = edades2.filter(function(edad){
+    return edad > 18;
+});
+
+console.log(mayoresDeEdad);
+
+
+
+//REDUCE - Recorre un array y devuelve un valor numero unico
+
+console.log("==================================");
+console.log("REDUCE - Recorre un array y devuelve un valor numero unico");
+
+let numsAzar = [5,7,16];
+
+let sumaArray = numsAzar.reduce(function(acum, num){
+    return acum + num;
+});
+
+console.log(sumaArray);
+
+
+
+//FOREACH - Itera sobre un array y mediante un callback realiza una accion
+
+console.log("==================================");
+console.log("FOREACH - Itera sobre un array y mediante un callback realiza una accion");
+
+let paises = ["Argentina", "Colombia", "Brasil"];
+
+paises.forEach(function(pais){
+    console.log(pais);
+});
+
 
 
 
