@@ -22,12 +22,27 @@ function mostrarTodasLasCategorias(){
 }
 
 
-mostrarTodasLasCategorias();
+// Funcion para crear nuevas categorias
+
+function crearUnaNuevaCategoria(categoria){
+    categorias.push(categoria);
+    console.log("Categoria " + categoria + " agregada exitosamente!");
+}
 
 // Funcion para agregar una nueva tarea al array
 
 function agregarTarea(nombreRecibido, fechaLimiteRecibida = null ){
-    tareas.push({ nombre : nombreRecibido, completada : false, fechaLimite : fechaLimiteRecibida});    
+    
+    mostrarTodasLasCategorias();
+    let numeroCategoria = parseInt(prompt("Ingrese el numero de la categoria para la nueva tarea: "));
+    
+    if(numeroCategoria >= 0 && numeroCategoria < categorias.length){
+        tareas.push({ nombre : nombreRecibido, completada : false, fechaLimite : fechaLimiteRecibida, categoria : numeroCategoria});
+        console.log("Tarea agregada con exito!");  
+    }else{
+        console.log("Numero de categoria incorrecto!");
+    }
+
 }
 
 // Eliminar una tarea
@@ -53,17 +68,50 @@ function completarTarea(indice){
 }
 
 // Funcion para modificar una tarea especifica
-function modificarTarea(indice, nuevoNombre, nuevaFechaLimite = null){
+function modificarTarea(indice, nuevoNombre, nuevaFechaLimite = null, nuevoNumeroCategoria){
     if(indice >= 0 && indice < tareas.length){
-        tareas[indice].nombre = nuevoNombre;
-        if(nuevaFechaLimite !== null){
-            tareas[indice].fechaLimite = nuevaFechaLimite;
-        }
-        console.log("Tarea modificada con exito!");
+        tareas[indice].nombre = nuevoNombre !== undefined ? nuevoNombre : tareas[indice].nombre;
+        tareas[indice].fechaLimite = nuevaFechaLimite !== undefined ? nuevaFechaLimite : tareas[indice].fechaLimite;
+        tareas[indice].categoria = nuevoNumeroCategoria !== undefined ? nuevoNumeroCategoria : tareas[indice].categoria;
+        console.log("Modificacion correcta!");
     }else{
         console.log("Indice de tarea invalido");
     }
 }
+
+// Funcion que filtra tareas por categoria
+function filtrarTareasPorCategoria(numeroCategoria){
+    let tareasFiltradas = tareas.filter(function(tarea){
+        return tarea.categoria === numeroCategoria;
+    });
+    return tareasFiltradas;
+}
+
+// Funcion que muestra cantidad de tareas completadas
+function contarTareasCompletadasPorCategoria(numeroCategoria){
+    let tareasCategoria = filtrarTareasPorCategoria(numeroCategoria);
+    let tareasCompletadas = tareasCategoria.reduce(function(contador, tarea){
+        return tarea.completada ? contador + 1 : contador;
+    },0);
+
+    let tareasEnTotal = tareasCategoria.length;
+
+    console.log("Tareas completadas de la categoria " + numeroCategoria + ": " + tareasCompletadas + " de " + tareasEnTotal + " tareas!");
+}
+
+
+// Funcion que muestra todas las tareas no completadas
+function mostrarTareasNoCompletadas(){
+    console.log("Tareas no completadas: ");
+    tareas.forEach(function(tarea){
+        if(!tarea.completada){
+            console.log("- Nombre: " + tarea.nombre + ", Categoria: " + categorias[tarea.categoria]);
+        }
+    });
+}
+
+
+
 
 // Funcion para mostrar el menu de opciones
 
@@ -74,6 +122,11 @@ function mostrarMenu(){
     console.log("3. Marcar tarea como completada");
     console.log("4. Modificar una tarea");
     console.log("5. Mostrar todas las tareas");
+    console.log("6. Mostrar todas las categorias");
+    console.log("7. Crear una nueva categoria");
+    console.log("8. Filtrar tareas por categoria");
+    console.log("9. Visualizar cantidad de tareas completadas por categoria");
+    console.log("10. Visualizar todas las tareas no completadas");
     console.log("0. Salir");
 }
 
@@ -104,13 +157,69 @@ function interactuarConUsuario(){
 
             case 4:
                 let indice = parseInt(prompt("Ingrese el indice de la tarea a modificar: "));
-                let nuevoNombre = prompt("Ingrese el nuevo nombre de la tarea: ");
-                modificarTarea(indice, nuevoNombre);
+                
+                if(indice >= 0 && indice < tareas.length){
+
+                    let opcion = parseInt(prompt("Que propiedad desea modificar? 1. Nombre, 2. Fecha Limite, 3. Categoria"));
+
+                    switch(opcion){
+                        case 1:
+                            let nuevoNombre = prompt("Ingrese el nuevo nombre de su tarea: ");
+                            modificarTarea(indice, nuevoNombre);
+                            break;
+
+                        case 2:
+                            let nuevaFechaLimite = prompt("Ingrese la nueva fecha limite para su tarea: ");
+                            modificarTarea(indice, undefined, nuevaFechaLimite);
+                            break;
+
+                        case 3:
+                            let nuevoNumeroCategoria = parseInt(prompt("Ingrese nuevo numero de categoria:"));
+                            if(nuevoNumeroCategoria >=0 && nuevoNumeroCategoria < categorias.length){
+                                modificarTarea(indice, undefined, undefined, nuevoNumeroCategoria);
+                            }
+                            break;
+                        
+                        default:
+                            console.log("Numero de opcion incorrecto!");
+                            break;
+                    }
+
+                }else{
+                    console.log("Indice de tarea incorrecto!");
+                }
                 break;
 
             case 5:
                 console.log(" -- Lista de Tareas -- ");
                 console.log(tareas);
+                break;
+
+            case 6:
+                mostrarTodasLasCategorias();
+                break;
+
+            case 7:
+                let nuevaCategoria = prompt("Ingrese el nombre de la categoria a ingresar: ");
+                crearUnaNuevaCategoria(nuevaCategoria);
+                break;
+
+            case 8:
+                mostrarTodasLasCategorias();
+                let nroCategoria = parseInt(prompt("Ingrese el numero de la categoria a filtrar: "));
+                let tareasCategoria = filtrarTareasPorCategoria(nroCategoria);
+                console.log("Tareas de la categoria seleccionada: ");
+                console.log(tareasCategoria);
+                break;
+            
+            case 9:
+                mostrarTodasLasCategorias();
+                let nroCateg = parseInt(prompt("Ingrese el numero de la categoria a visualizar"));
+                contarTareasCompletadasPorCategoria(nroCateg);
+                break;
+
+            case 10:
+                mostrarTareasNoCompletadas();
                 break;
             
             default:
@@ -120,6 +229,6 @@ function interactuarConUsuario(){
     }
 }
 
-//interactuarConUsuario();
+interactuarConUsuario();
 
 
