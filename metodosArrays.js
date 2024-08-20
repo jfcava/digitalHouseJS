@@ -228,6 +228,18 @@ paises.forEach(function(pais){
     console.log(pais);
 });
 
+/* 
+
+ASI ES COMO FUNCIONA EL METODO FOREACH
+
+array.forEach(callback(currentValue, index, array));
+
+currentValue: El valor del elemento actual en el array.
+index: El índice del elemento actual en el array.
+array: El array sobre el que se está llamando forEach (este parámetro es opcional).
+
+*/
+
 
 
 

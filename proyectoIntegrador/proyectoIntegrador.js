@@ -5,9 +5,28 @@ const prompt = require("prompt-sync")({ sigint : true});
 
 let tareas = [];
 
+// Array para categorias
+
+let categorias = [
+    "Personal",
+    "Trabajo"
+];
+
+// Funcion para mostrar las categorias
+
+function mostrarTodasLasCategorias(){
+    console.log("Categorias existentes:");
+    categorias.forEach(function(categoria, indice){
+        console.log(indice + ": " + categoria);
+    });
+}
+
+
+mostrarTodasLasCategorias();
+
 // Funcion para agregar una nueva tarea al array
 
-function agregarTarea(nombreRecibido, fechaLimiteRecibida ){
+function agregarTarea(nombreRecibido, fechaLimiteRecibida = null ){
     tareas.push({ nombre : nombreRecibido, completada : false, fechaLimite : fechaLimiteRecibida});    
 }
 
@@ -101,6 +120,6 @@ function interactuarConUsuario(){
     }
 }
 
-interactuarConUsuario();
+//interactuarConUsuario();
 
 
